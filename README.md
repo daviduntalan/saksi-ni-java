@@ -1,5 +1,5 @@
 # Saksi ni Java
-## Activity - Convert Number
+## Activity - Convert Number to (Binary | Octa | Hexa)
 Convert number to any specified base.
 
 ## …or create a new repository on the command line
