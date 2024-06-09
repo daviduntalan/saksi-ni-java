@@ -6,50 +6,65 @@ import java.util.Scanner;
  *
  * @author david
  */
-public class ConvertNumber {    
+public class ConvertNumber {
 
     public static void main(String[] args) {
 
         try (Scanner scanner = new Scanner(System.in)) {
 
-            do {
+            do { // to run at least one 
 
-                System.out.print("Enter a decimal value (0 to exit): ");
-                int num = scanner.nextInt();
+                System.out.print("Enter a decimal value (0 to exit): "); 
+                int num = scanner.nextInt();                         
+                
                 if (num != 0) {
                     System.out.printf("%s\n", "***** Result *****");
-                    System.out.printf("Number: %s\n", getBaseValue(num, 10));
-                    System.out.printf("To Bin: %s\n", getBaseValue(num,  2));
-                    System.out.printf("To Oct: %s\n", getBaseValue(num,  8));
-                    System.out.printf("To Hex: %s\n", getBaseValue(num, 16));
+                    System.out.printf("Number: %s\n", getBaseValue(10, num));
+                    System.out.printf("To Bin: %s\n", getBaseValue( 2, num));
+                    System.out.printf("To Oct: %s\n", getBaseValue( 8, num));
+                    System.out.printf("To Hex: %s\n", getBaseValue(16, num));
                 } else {
                     System.out.println("Tapos na po!");
-                    break;
+                    break;  // break the infinite loop
                 }
 
-            } while (true);
+            } while (true); // always true
 
         }
 
     }
     
-    static String getBaseValue(int number, int base) {
+    /* static String getBaseValue(int base, int value) {
 
-        StringBuilder sb = new StringBuilder();      
-        int quotient, toHexDigit;
-        
-        while (number != 0) {
-            quotient = number % base;
-            if (quotient > 9) {
-                toHexDigit = 'A' + (quotient - 10);
+        String alphaDigits = "0123456789ABCDEF";
+        int idxRem, idxCap = 32; // idx: remainder, capacity
+        char[] sb = new char[idxCap];
+
+        while (value != 0) {
+            idxRem = value % base; // remainder    
+            sb[--idxCap] = alphaDigits.charAt(idxRem);
+            value /= base;
+        }                              
+
+        return String.valueOf(sb);                
+    } */
+
+    static String getBaseValue(int base, int value) {
+
+        StringBuilder sb = new StringBuilder();
+        int remainder, toHexDigit;
+
+        while (value != 0) {
+            remainder = value % base; // get remainder    
+            if (remainder > 9) {
+                toHexDigit = 'A' + (remainder - 10); // alternative to switch-case
                 sb.append((char) toHexDigit);
             } else {
-                sb.append(quotient);
+                sb.append(remainder);
             }
-            number /= base;                                   
-        }
-        
+            value /= base; // get quotient
+        }                              
+
         return sb.reverse().toString();
     }
-   
 }
