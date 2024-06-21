@@ -74,7 +74,7 @@ public class ColumnToRow {
         switch (direction) {
 
             case Direction.ROW -> {
-                System.out.println("***** START: ORGINAL DATA *****");
+                System.out.println("***** START: ORIGINAL DATA *****");
                 
                 /* column header */
                 printHorizontalLine(90);
@@ -91,7 +91,7 @@ public class ColumnToRow {
                     printHorizontalLine(90);
                 });
                 
-                System.out.println("***** END: ORGINAL DATA *****");
+                System.out.println("***** END: ORIGINAL DATA *****");
             }
 
             case Direction.COL -> {
@@ -125,7 +125,7 @@ public class ColumnToRow {
 
 /*
 SAMPLE run:
-***** START: ORGINAL DATA *****
+***** START: ORIGINAL DATA *****
 ------------------------------------------------------------------------------------------
 | Code      | Text                          | en-US               | zh-CN                |
 ------------------------------------------------------------------------------------------
@@ -133,7 +133,7 @@ SAMPLE run:
 ------------------------------------------------------------------------------------------
 | BYE       | Good bye                      | Bye bye             | Zaijian              |
 ------------------------------------------------------------------------------------------
-***** END: ORGINAL DATA *****
+***** END: ORIGINAL DATA *****
 
 
 ***** START: TRANSFORMED DATA *****
