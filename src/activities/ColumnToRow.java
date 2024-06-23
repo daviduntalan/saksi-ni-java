@@ -34,7 +34,7 @@ class Translation {
  */
 public class ColumnToRow {
 
-    enum Direction { COL, ROW };
+    enum Direction { COL, ROW }
 
     public static void main(String[] args) {
 
@@ -43,7 +43,9 @@ public class ColumnToRow {
         translations.add(new Translation("HELLO", "Hello") {
             {
                 addCulture("fl-PH", "Kamusta");
-                addCulture("zh-CN", "Ni hao");
+                addCulture("zh-CN", "你好");
+                // addCulture("en-US", "What's up");
+                addCulture("en-US", "What's new");
                 /* add more culture, value here */
             }
         });
@@ -52,10 +54,18 @@ public class ColumnToRow {
             {
                 addCulture("en-US", "Bye bye");
                 addCulture("fl-PH", "Paalam");
-                addCulture("zh-CN", "Zaijian");
+                addCulture("zh-CN", "再见");
                 /* add more culture, value here */
             }
         });
+
+        /* translations.add(new Translation("INTEREST", "Profits"){
+            {
+                addCulture("en-US", "Returns");
+                addCulture("fl-PH", "Tubo");
+                // addCulture("zh-CN", "利润");
+            }
+        }); */
 
         print(Direction.ROW, translations);
         System.out.print("\n\n");
@@ -75,33 +85,35 @@ public class ColumnToRow {
 
             case Direction.ROW -> {
                 System.out.println("***** START: ORIGINAL DATA *****");
-                
+
                 /* column header */
                 printHorizontalLine(90);
-                System.out.printf("| %-10s| %-30s| %-20s| %-20s |\n", "Code", "Text", "en-US", "zh-CN");
+                System.out.printf("| %-10s| %-30s| %-20s| %-20s |\n",
+                        "Code", "Text", "en-US", "zh-CN");
                 printHorizontalLine(90);
-                
+
                 /* column values */
                 translations.forEach((translation) -> {
                     System.out.printf("| %-10s| %-30s| %-20s| %-20s |\n",
                         translation.getCode(), translation.getText(),
                         translation.getCultures().getOrDefault("en-US", defaultValue),
                         translation.getCultures().getOrDefault("zh-CN", defaultValue)
+                        // ,translation.getCultures().getOrDefault("fl-PH", defaultValue)
                     );
                     printHorizontalLine(90);
                 });
-                
+
                 System.out.println("***** END: ORIGINAL DATA *****");
             }
 
             case Direction.COL -> {
                 System.out.println("***** START: TRANSFORMED DATA *****");
-                
+
                 /* column header */
                 printHorizontalLine(57);
                 System.out.printf("| %-10s| %-10s| %-30s|\n", "Code", "Culture", "Value");
                 printHorizontalLine(57);
-                
+
                 /* column values */
                 translations.forEach((translation) -> {
                     var code = translation.getCode();
@@ -112,7 +124,7 @@ public class ColumnToRow {
                         printHorizontalLine(57);
                     });
                 });
-                
+
                 System.out.println("***** END: TRANSFORMED DATA *****");
             }
 
@@ -124,32 +136,26 @@ public class ColumnToRow {
 
 
 /*
-SAMPLE run:
-***** START: ORIGINAL DATA *****
-------------------------------------------------------------------------------------------
-| Code      | Text                          | en-US               | zh-CN                |
-------------------------------------------------------------------------------------------
-| HELLO     | Hello                         |                     | Ni hao               |
-------------------------------------------------------------------------------------------
-| BYE       | Good bye                      | Bye bye             | Zaijian              |
-------------------------------------------------------------------------------------------
-***** END: ORIGINAL DATA *****
 
-
-***** START: TRANSFORMED DATA *****
----------------------------------------------------------
-| Code      | Culture   | Value                         |
----------------------------------------------------------
-| HELLO     | fl-PH     | Kamusta                       |
----------------------------------------------------------
-| HELLO     | zh-CN     | Ni hao                        |
----------------------------------------------------------
-| BYE       | fl-PH     | Paalam                        |
----------------------------------------------------------
-| BYE       | en-US     | Bye bye                       |
----------------------------------------------------------
-| BYE       | zh-CN     | Zaijian                       |
----------------------------------------------------------
-***** END: TRANSFORMED DATA *****
-BUILD SUCCESSFUL (total time: 0 seconds)
+ArrayList (translations)        +---->   HELLO (HashMap)
+-------------                  |        ---------------------------------------------
+| HELLO   --|--> (HashMap) ----+        | KEY       | VALUE                         |
+-------------                           ---------------------------------------------
+| BYE     --|--> (HashMap) ----+        | fl-PH     | Kamusta                       |
+-------------                  |        ---------------------------------------------
+                               |        | zh-CN     | 你好                           |
+                               |        ---------------------------------------------
+ +-----------------------------+
+ |
+ V
+BYE (HashMap)
+---------------------------------------------
+| KEY       | VALUE                         |
+---------------------------------------------
+| fl-PH     | Paalam                        |
+---------------------------------------------
+| en-US     | Bye bye                       |
+---------------------------------------------
+| zh-CN     | 再见                           |
+---------------------------------------------
 */
